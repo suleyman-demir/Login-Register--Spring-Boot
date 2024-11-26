@@ -28,6 +28,7 @@ public class LoginService {
 
     private final ApplicationEventPublisher eventPublisher;
 
+    private final KafkaProducerService kafkaProducerService;
 
 
 
@@ -43,12 +44,18 @@ public class LoginService {
                 "Kullanıcı Adı: " + loginEntity.getUsername() +
                         " İsim Soyisim: " + loginEntity.getName() + " " + loginEntity.getSurname());
 
-        // Event yayınlama
-        UserRegisteredEvent event = UserRegisteredEvent.builder()
-                .username(loginDto.username())
-                .email(loginDto.mail())
-                .build();
-        eventPublisher.publishEvent(event);
+//        // Event yayınlama
+//        UserRegisteredEvent event = UserRegisteredEvent.builder()
+//                .username(loginDto.username())
+//                .email(loginDto.mail())
+//                .build();
+//        eventPublisher.publishEvent(event);
+        String eventMessage = String.format("User registered: %s, Email: %s",
+                loginEntity.getUsername(),
+                loginEntity.getMail());
+        kafkaProducerService.publishUserRegisteredEvent(eventMessage);
+
+        System.out.println("User registered successfully and event published.");
     }
 
     public List<LoginEntity> getAllUsers() {
