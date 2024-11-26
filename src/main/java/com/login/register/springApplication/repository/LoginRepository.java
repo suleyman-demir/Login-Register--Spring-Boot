@@ -1,28 +1,15 @@
 package com.login.register.springApplication.repository;
 
 import com.login.register.springApplication.model.LoginEntity;
-import org.springframework.data.cassandra.repository.AllowFiltering;
-import org.springframework.data.cassandra.repository.CassandraRepository;
-import org.springframework.data.cassandra.repository.Query;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
 
-@Repository
+public interface LoginRepository extends MongoRepository<LoginEntity, String> {
 
-public interface LoginRepository extends CassandraRepository<LoginEntity, String>  {
+    boolean existsByUsername(String username);
 
-    @AllowFiltering
-    Optional<LoginEntity>findByUsernameAndPassword(String userName,String password);
+    Optional<LoginEntity> findByUsername(String username);
 
-
-    @AllowFiltering
-    Optional<LoginEntity> findByUsername(String userName);
-
-
-     boolean existsByUsername(String userName);
-
-
-
-
+    Optional<LoginEntity> findByUsernameAndPassword(String username, String password);
 }

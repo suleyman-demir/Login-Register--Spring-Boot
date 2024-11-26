@@ -1,18 +1,19 @@
 package com.login.register.springApplication.model;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
+
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.UUID;
 
-@Table("users")
+@Document(collection="users")
 @Data
 @Builder
+@Getter
+@Setter
 public class LoginEntity {
 
-    @PrimaryKey
+    @Id
     private String username;
     private String password;
     private String name;
@@ -28,43 +29,4 @@ public class LoginEntity {
     }
 
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-}
+  }
